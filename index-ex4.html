@@ -1,0 +1,110 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>circleProgressbar jQuery Plugin ex4</title>
+<style>
+body {  font-family: "Open Sans","Helvetica", "Arial", sans-serif;  background-color: #fafafa; }
+section {  margin-bottom: 20px;  margin-right: 2.5%;  margin-left: 2.5%;  margin-top: 20px;
+  padding: 0;    font-size: 20px; }
+section p, section pre {  margin-left: 120px; }
+section pre {  background: rgba(0,0,0,0.1);  padding: 10px;  border-radius: 3px }
+h2 {  margin: 0 0 10px 0; }
+.example {  float: left;  margin-right: 20px; }
+@media (min-width: 481px) {
+  section {    width: 45%;    float: left;  }
+  section:nth-child(odd) {    clear: both;  }
+}
+</style>
+</head>
+<body>
+<h1 style="margin:150px auto 30px auto; text-align:center">Circle Progress Bar</h1>
+    <section>
+      <div id="example1" class="example"></div>
+      <h2>기본형 프로그래스 삽입</h2>
+    </section>
+    <section>
+      <div id="pie" class="example" style="width: 100px;"></div>
+      <h2>파이형 프로그레스 삽입</h2>
+    </section>
+    <section>
+      <div id="multi" class="example" style="width: 100px;"></div>
+      <h2>여러 겹의 도넛형 프로그레스 삽입</h2>
+    </section>
+    <section>
+      <h2>인라인 아이콘 삽입</h2>
+      With a small size and fill settings and transparent text inline icon progress bar <span id="smallrad" style="display: inline-block;"></span> or pie chart <span id="smallpie" style="display: inline-block;"></span> can be created.</span>
+    </section>
+
+    <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
+    <script src="circleProgressbar2.js"></script>
+    <script>
+    $("#example1").circleProgressbar2("init", {
+      'size': 100,
+      'fill': 5
+    }).circleProgressbar2("to", {'perc': 100, 'time': 10000});
+
+    $("#pie").radialPieChart("init", {
+      'font-size': 13,
+      'fill': 20,
+      'data': [
+        {'color': "#2DB1E4", 'perc': 33},
+        {'color': "#9CCA13", 'perc': 33},
+        {'color': "#A4075E", 'perc': 33}
+      ]
+    });
+
+    var clock = jQuery("#multi").radialMultiProgress("init", {
+      'fill': 25,
+      'font-size': 14,
+      'data': [
+        {'color': "#2DB1E4", 'range': [0, 12]},
+        {'color': "#9CCA13", 'range': [0, 59]},
+        {'color': "#A4075E", 'range': [0, 59]}
+      ]
+    });
+
+    var startClock = function() {
+      var dh, dm, ds;
+      setInterval(function() {
+        var date = new Date(),
+            h = date.getHours() % 12,
+            m = date.getMinutes(),
+            s = date.getSeconds();
+        if (dh !== h) { clock.radialMultiProgress("to", {
+          "index": 0, 'perc': h, 'time': (h ? 100 : 10)
+        }); dh = h; }
+        if (dm !== m) { clock.radialMultiProgress("to", {
+          "index": 1, 'perc': m, 'time': (m ? 100 : 10)
+        }); dm = m; }
+        if (ds !== s) { clock.radialMultiProgress("to", {
+          "index": 2, 'perc': s, 'time': (s ? 100 : 10)
+        }); ds = s; }
+      }, 1000);
+    };
+
+    startClock();
+
+    $("#smallrad").circleProgressbar2("init", {
+      'size': 20,
+      'fill': 2,
+      'text-color': "transparent"
+    }).circleProgressbar2("to", {'perc': 66});
+
+    $("#smallpie").radialPieChart("init", {
+      'size': 20,
+      'fill': 5,
+      'text-color': "transparent",
+      'data': [
+        {'color': "#2DB1E4", 'perc': 30},
+        {'color': "#9CCA13", 'perc': 40},
+        {'color': "#A4075E", 'perc': 30}
+      ]
+    });
+
+    </script>
+</body>
+</html>

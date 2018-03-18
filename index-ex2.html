@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jquery-circle-progress - jQuery Plugin to draw animated circular progress bars</title>
+<style>
+.circle {
+  width: 100px;
+  margin: 6px 6px 20px;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  line-height: 1.2;
+}
+
+</style>
+</head>
+
+<body>
+
+    <div class="circle">
+      <b></b>
+    </div>
+	<div class="circle">
+      <b></b>
+    </div>
+	<div class="circle">
+      <b></b>
+    </div>
+	<div class="circle">
+      <b></b>
+    </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="circleProgress.js"></script>
+  <script>
+  $('.circle').circleProgress({
+    value: 0.75,
+    fill: {gradient: [['pink',1], ['pink',1]], gradientAngle: Math.PI / 4}
+  }).on('circle-animation-progress', function(event, progress, stepValue) {
+    $(this).find('b').text(stepValue.toFixed(2).substr(1)*100+"%");
+  });
+  </script>
+</body>
+</html>
